@@ -2,16 +2,12 @@ from abc import ABC, abstractmethod
 from typing import Type
 
 from db.db import async_session_maker
-from repositories.task_history import TaskHistoryRepository
-from repositories.tasks import TasksRepository
 from repositories.users import UsersRepository
 
 
 # https://github1s.com/cosmicpython/code/tree/chapter_06_uow
 class IUnitOfWork(ABC):
     users: Type[UsersRepository]
-    tasks: Type[TasksRepository]
-    task_history: Type[TaskHistoryRepository]
     
     @abstractmethod
     def __init__(self):
@@ -42,8 +38,7 @@ class UnitOfWork:
         self.session = self.session_factory()
 
         self.users = UsersRepository(self.session)
-        self.tasks = TasksRepository(self.session)
-        self.task_history = TaskHistoryRepository(self.session)
+
 
     async def __aexit__(self, *args):
         await self.rollback()
