@@ -1,17 +1,25 @@
-import asyncio
+from config.config import DB_HOST, DB_PORT, DB_USER, DB_NAME, DB_PASS
+from sqlalchemy.ext.asyncio import async_engine_from_config
+from sqlalchemy.engine import Connection
 from logging.config import fileConfig
-
 from alembic import context
 from sqlalchemy import pool
-from sqlalchemy.engine import Connection
-from sqlalchemy.ext.asyncio import async_engine_from_config
-
 from db.db import Base
-from models.tasks import Tasks
-from models.users import Users
+from models.groups import Groups
+from models.subjects import Subjects
+from models.students import Students
+from models.teachers import Teachers
+from models.m2m import groups_subjects, teachers_groups, teachers_subjects
+import asyncio
 
 config = context.config
-config.set_main_option("sqlalchemy.url", "sqlite+aiosqlite:///sqlite.db")
+section = config.config_ini_section
+config.set_section_option(section, "DB_HOST", DB_HOST)
+config.set_section_option(section, "DB_PORT", DB_PORT)
+config.set_section_option(section, "DB_USER", DB_USER)
+config.set_section_option(section, "DB_NAME", DB_NAME)
+config.set_section_option(section, "DB_PASS", DB_PASS)
+
 
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
@@ -19,6 +27,8 @@ if config.config_file_name is not None:
 
 target_metadata = Base.metadata
 
+# [Groups.metadata, Students.metadata, Subjects.metadata, Teachers.metadata, groups_subjects.metadata,
+#                    teachers_groups.metadata, teachers_subjects.metadata]
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.

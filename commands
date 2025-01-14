@@ -1,0 +1,11 @@
+select * from students
+select * from teachers
+select * from groups
+select * from subjects
+select * from groups_subjects
+select * from teachers_groups
+select * from teachers_subjects
+
+
+
+alembic revision --autogenerate -m "db create"
