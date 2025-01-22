@@ -9,3 +9,17 @@ select * from teachers_subjects
 
 
 alembic revision --autogenerate -m "db create"
+
+
+                    sa.Column('is_role', sa.Enum('student', 'headman', name='enumstudents').with_variant(
+                        postgresql.ENUM('student', 'headman', name='enumstudents',
+                                        create_type=False), 'postgresql',
+                    ), nullable=False),
+
+
+                    sa.Column('is_role', sa.Enum('professor', 'associate_professor', 'senior_lecturer', 'assistant',
+                                                 name='enumteachers').with_variant(
+                        postgresql.ENUM('professor', 'associate_professor', 'senior_lecturer', 'assistant',
+                                        name='enumteachers',
+                                        create_type=False), 'postgresql',
+                    ), nullable=False),

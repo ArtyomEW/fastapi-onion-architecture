@@ -1,20 +1,19 @@
 from sqlalchemy.orm import relationship, Mapped, mapped_column
-from models.dependencies_for_models import intpk
+from models.dependencies_for_models import uuid_pk
 from schemas.subjects import SSubjects
+from . import groups, teachers
 from typing import List
 from db.db import Base
 
 
 class Subjects(Base):
     __tablename__ = 'subjects'
-    id: Mapped[intpk]
+    uuid: Mapped[uuid_pk]
     name: Mapped[str] = mapped_column(unique=True, nullable=False)
     groups: Mapped[List["Groups"]] = relationship(back_populates="subjects", secondary="groups_subjects")
     teachers: Mapped[List["Teachers"]] = relationship(back_populates="subjects", secondary="teachers_subjects")
 
     def to_read_model(self) -> SSubjects:
         return SSubjects(
-            id=self.id,
-            name=self.name,
-            groups=self.groups,
-            teachers=self.teachers, )
+            uuid=self.uuid,
+            name=self.name,)
