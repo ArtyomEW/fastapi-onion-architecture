@@ -2,6 +2,7 @@ from repositories.subjects import SubjectsRepository
 from repositories.teachers import TeachersRepository
 from repositories.students import StudentsRepository
 from repositories.groups import GroupsRepository
+from repositories.files import FilesRepository
 from db.db import async_session_maker
 from abc import ABC, abstractmethod
 from typing import Type
@@ -13,6 +14,7 @@ class IUnitOfWork(ABC):
     teachers: Type[TeachersRepository]
     subjects: Type[SubjectsRepository]
     groups: Type[GroupsRepository]
+    files: Type[FilesRepository]
 
     @abstractmethod
     def __init__(self):
@@ -49,6 +51,7 @@ class UnitOfWork:
         self.groups = GroupsRepository(self.session)
         self.subjects = SubjectsRepository(self.session)
         self.teachers = TeachersRepository(self.session)
+        self.files = FilesRepository(self.session)
 
     async def __aexit__(self, *args):
         await self.rollback()

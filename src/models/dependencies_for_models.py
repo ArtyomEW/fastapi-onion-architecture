@@ -1,5 +1,5 @@
 from sqlalchemy.orm import mapped_column
-from sqlalchemy import String, func
+from sqlalchemy import String
 from typing import Annotated
 from uuid import UUID, uuid4
 

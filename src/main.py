@@ -1,6 +1,9 @@
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
 from starlette.responses import JSONResponse
 from core.exceptions import MyException
 from starlette.requests import Request
+from api.dependencies import limiter
 from api.routers import all_routers
 from fastapi import FastAPI
 import uvicorn
@@ -8,6 +11,9 @@ import uvicorn
 app = FastAPI(
     title="Упрощенный аналог Jira/Asana"
 )
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 
 @app.exception_handler(MyException)

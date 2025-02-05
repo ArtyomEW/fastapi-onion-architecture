@@ -1,4 +1,4 @@
-from models.dependencies_for_models import uuid_pk, required_name, unique_required_name, optional_line
+from models.dependencies_for_models import (uuid_pk, required_name, unique_required_name, optional_line)
 from sqlalchemy.orm import mapped_column, relationship, Mapped
 from sqlalchemy import ForeignKey, DateTime, Enum as SQLEnum
 from schemas.students import SStudents
@@ -17,9 +17,9 @@ class EnumStudents(Enum):
 class Students(Base):
     __tablename__ = "students"
     uuid: Mapped[uuid_pk]
-    name: Mapped[required_name]
-    surname: Mapped[required_name]
-    father_name: Mapped[optional_line]
+    first_name: Mapped[required_name]
+    last_name: Mapped[required_name]
+    middle_name: Mapped[optional_line]
     login: Mapped[unique_required_name]
     hashed_password: Mapped[required_name]
     faculty: Mapped[optional_line]
@@ -30,16 +30,11 @@ class Students(Base):
     group_uuid: Mapped[UUID] = mapped_column(ForeignKey('groups.uuid', ondelete="CASCADE"), nullable=True)
     groups: Mapped["Groups"] = relationship(back_populates='students')
 
-    # def __repr__(self):
-    #     return (f"Students({self.uuid}, {self.name}, {self.surname}, {self.father_name}, {self.login}, {self.hashed_password}, "
-    #             f"{self.faculty}, {self.is_role}, {self.is_active}, {self.created_on}, {self.updated_on}, "
-    #             f"{self.group_uuid}), {self.groups}")
-
     def to_read_model(self) -> SStudents:
         return SStudents(uuid=self.uuid,
-                         name=self.name,
-                         surname=self.surname,
-                         father_name=self.father_name,
+                         first_name=self.first_name,
+                         last_name=self.last_name,
+                         middle_name=self.middle_name,
                          login=self.login,
                          hashed_password=self.hashed_password,
                          is_role=self.is_role,
@@ -47,4 +42,4 @@ class Students(Base):
                          created_on=self.created_on,
                          updated_on=self.updated_on,
                          group_uuid=self.group_uuid,
-                          )
+                         )

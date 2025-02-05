@@ -5,6 +5,7 @@ select * from subjects
 select * from groups_subjects
 select * from teachers_groups
 select * from teachers_subjects
+select * from files
 
 
 

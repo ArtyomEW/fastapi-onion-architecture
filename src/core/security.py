@@ -2,6 +2,7 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from passlib.context import CryptContext
 from datetime import datetime, timedelta
 from fastapi import Request
+from pprint import pprint
 from config import config
 from typing import Tuple
 import jwt
@@ -59,6 +60,7 @@ class JWTBearer(HTTPBearer):
         try:
             payload = decode_jwt(jwt_token)
         except Exception as e:
+            pprint(e)
             payload = None
         if payload:
             is_token_valid = True

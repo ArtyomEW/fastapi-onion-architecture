@@ -1,14 +1,27 @@
 from .dependencies_for_schemas import BaseSchema
-from pydantic import Field, BaseModel
+from pydantic import BaseModel
+from uuid import UUID
 
 
-class SSubjects(BaseSchema):
+class Subjects(BaseModel):
     name: str
-    groups: list | None = Field(default=None)
-    teachers: list | None = Field(default=None)
 
 
-class SSubjectsAdd(BaseModel):
-    name: str
-    groups: list | None = Field(default=None)
-    teachers: list | None = Field(default=None)
+class SSubjects(Subjects, BaseSchema):
+    pass
+
+
+class SSubjectsEdit(Subjects):
+    pass
+
+
+class SSubjectsGroups(BaseModel):
+    groups: list[UUID]
+
+
+class SSubjectsTeachers(BaseModel):
+    teachers: list[UUID]
+
+
+class SSubjectsAdd(Subjects):
+    pass

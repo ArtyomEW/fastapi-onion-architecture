@@ -32,9 +32,9 @@ def upgrade() -> None:
                     )
     op.create_table('teachers',
                     sa.Column('uuid', sa.Uuid(), nullable=False),
-                    sa.Column('name', sa.String(), nullable=False),
-                    sa.Column('surname', sa.String(), nullable=False),
-                    sa.Column('father_name', sa.String(), nullable=True),
+                    sa.Column('first_name', sa.String(), nullable=False),
+                    sa.Column('last_name', sa.String(), nullable=False),
+                    sa.Column('middle_name', sa.String(), nullable=True),
                     sa.Column('login', sa.String(length=100), nullable=False),
                     sa.Column('hashed_password', sa.String(), nullable=False),
 
@@ -60,9 +60,9 @@ def upgrade() -> None:
                     )
     op.create_table('students',
                     sa.Column('uuid', sa.Uuid(), nullable=False),
-                    sa.Column('name', sa.String(), nullable=False),
-                    sa.Column('surname', sa.String(), nullable=False),
-                    sa.Column('father_name', sa.String(), nullable=True),
+                    sa.Column('first_name', sa.String(), nullable=False),
+                    sa.Column('last_name', sa.String(), nullable=False),
+                    sa.Column('middle_name', sa.String(), nullable=True),
                     sa.Column('login', sa.String(length=100), nullable=False),
                     sa.Column('hashed_password', sa.String(), nullable=False),
                     sa.Column('faculty', sa.String(), nullable=True),

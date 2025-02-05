@@ -9,6 +9,7 @@ from models.groups import Groups
 from models.subjects import Subjects
 from models.students import Students
 from models.teachers import Teachers
+from models.files import Files
 from models.m2m import groups_subjects, teachers_groups, teachers_subjects
 import asyncio
 
@@ -20,12 +21,11 @@ config.set_section_option(section, "DB_USER", DB_USER)
 config.set_section_option(section, "DB_NAME", DB_NAME)
 config.set_section_option(section, "DB_PASS", DB_PASS)
 
-
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
-
 target_metadata = Base.metadata
+
 
 # [Groups.metadata, Students.metadata, Subjects.metadata, Teachers.metadata, groups_subjects.metadata,
 #                    teachers_groups.metadata, teachers_subjects.metadata]
